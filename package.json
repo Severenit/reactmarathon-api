@@ -5,7 +5,8 @@
   "scripts": {
     "build:dev": "env NODE_ENV=development webpack --config webpack.config.js",
     "build:prod": "env NODE_ENV=production webpack --config webpack.config.js",
-    "start": "npm i && npm run build:prod && node dist/server.js"
+    "start": "npm i && npm run build:prod && node dist/server.js",
+    "dev": "node dist/server.js"
   },
   "repository": "git@github.com:Severenit/reactmarathon-api.git",
   "author": "Zar Zakharov <severenit@gmail.com>",
