@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import Hapi from '@hapi/hapi';
+import {BOARD_MIN} from './constants';
 
 const port = process.env.PORT || 3000;
 const host = process.env.HOST || 'localhost';
@@ -17,6 +18,14 @@ const init = async () => {
         path: '/',
         handler: (request, h) => {
           return 'Hello My Dear Friend!'
+        }
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/api/pokemons/board',
+        handler: (request, h) => {
+          return BOARD_MIN;
         }
     });
 
