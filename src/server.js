@@ -13,11 +13,11 @@ const init = async () => {
 
     await server.register(require('@hapi/inert'));
 
-    server.route.options.cors({
-        origin: '*',
-        headers: ['Accept', 'Authorization', 'Content-Type', 'If-None-Match'],
-        credentials: true,
-    })
+    // server.route.options.cors({
+    //     origin: '*',
+    //     headers: ['Accept', 'Authorization', 'Content-Type', 'If-None-Match'],
+    //     credentials: true,
+    // })
 
     server.route({
         method: 'GET',
