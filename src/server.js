@@ -2,8 +2,10 @@ import fs from 'fs';
 import path from 'path';
 import Hapi from '@hapi/hapi';
 import {BOARD_MIN} from './constants';
+import {playerTurn} from './playerTurn';
+import {createPlayer} from './createPlayer';
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 const host = process.env.HOST || 'localhost';
 
 const init = async () => {
@@ -23,21 +25,43 @@ const init = async () => {
         method: 'GET',
         path: '/',
         handler: (request, h) => {
-          return 'Hello My Dear Friend!!'
+            return 'Hello My Dear Friend!!';
         }
     });
 
     server.route({
         method: 'GET',
         path: '/api/pokemons/board',
-        handler: (request, h) => {
-          return BOARD_MIN;
+        handler: () => {
+            return BOARD_MIN;
+        }
+    });
+
+    server.route({
+        method: 'POST',
+        path: '/api/pokemons/players-turn',
+        handler: (request) => {
+            const result = playerTurn(request.payload);
+            return {
+                data: result
+            };
+        }
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/api/pokemons/create',
+        handler: () => {
+            const result = createPlayer();
+            return {
+                data: result
+            };
         }
     });
 
     await server.start();
     console.log('Server running on %s', server.info.uri);
-}
+};
 
 process.on('unhandledRejection', (err) => {
     console.log(err);
