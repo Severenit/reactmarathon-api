@@ -9,6 +9,7 @@ import { createPlayer } from './createPlayer';
 
 const port = process.env.PORT || 4000;
 const host = process.env.HOST || 'localhost';
+const sockerPort = 6000;
 
 console.log(port);
 console.log(host);
@@ -19,11 +20,16 @@ const init = async () => {
         routes: {
             cors: {
                 origin: ['*'],
-                headers: ['Accept', 'Authorization', 'Content-Type', 'If-None-Match'],
+                headers: [
+                    'Accept',
+                    'Authorization',
+                    'Content-Type',
+                    'If-None-Match',
+                ],
                 credentials: true,
-                additionalHeaders: ['X-Requested-With']
-            }
-        }
+                additionalHeaders: ['X-Requested-With'],
+            },
+        },
     });
 
     await server.register(require('@hapi/inert'));
@@ -45,7 +51,7 @@ const init = async () => {
         path: '/api/pokemons/board',
         handler: () => {
             return {
-                data: BOARD_MIN
+                data: BOARD_MIN,
             };
         },
     });
@@ -74,13 +80,13 @@ const init = async () => {
 
     await server.start();
     console.log('Server running on %s', server.info.uri);
-    // console.log(port + 1);
-    // const ioServer = http.Server(server);
-    // socket(ioServer);
 
-    // ioServer.listen(port + 1, () => {
-    //     console.log(`Game socket listening on port ${port + 1}`);
-    // });
+    const ioServer = http.Server(server);
+    socket(ioServer);
+
+    ioServer.listen(sockerPort, () => {
+        console.log(`Game socket listening on port ${sockerPort}`);
+    });
 };
 
 process.on('unhandledRejection', (err) => {
