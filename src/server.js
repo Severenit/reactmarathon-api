@@ -18,7 +18,7 @@ const init = async () => {
         port,
         routes: {
             cors: {
-                origin: '*',
+                origin: ['*'],
                 headers: ['Accept', 'Authorization', 'Content-Type', 'If-None-Match'],
                 credentials: true,
                 additionalHeaders: ['X-Requested-With']
