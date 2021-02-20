@@ -8,6 +8,7 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     },
+    watch: NODE_ENV === 'development',
     mode: NODE_ENV ? NODE_ENV : 'development',
     entry: path.resolve(__dirname, 'src/server.js'),
     output: {
