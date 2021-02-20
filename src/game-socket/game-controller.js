@@ -4,9 +4,12 @@ const randomId = () => {
     return Math.floor(Math.random() * 100);
 };
 
-export default (io) => {
+export default (app) => {
     const rooms = new Map();
-    console.log('Controller started');
+
+    const io = new Server(app, { path: '/game-mode' });
+    console.log('Socketio initialised!');
+
     const gameMode = io.of('/game-mode');
     gameMode.on('connection', async (socket) => {
         const userId = socket.id;
