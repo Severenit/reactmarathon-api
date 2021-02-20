@@ -2,16 +2,18 @@ import fs from 'fs';
 import path from 'path';
 import http from 'http';
 import Hapi from '@hapi/hapi';
-import {BOARD_MIN} from './constants';
-import {socket} from './game-socket/index';
-import {playerTurn} from './playerTurn';
-import {createPlayer} from './createPlayer';
+import { BOARD_MIN } from './constants';
+import { socket } from './game-socket/index';
+import { playerTurn } from './playerTurn';
+import { createPlayer } from './createPlayer';
 
 const port = process.env.PORT || 4000;
 const host = process.env.HOST || 'localhost';
 
-const init = async () => {
+console.log(port);
+console.log(host);
 
+const init = async () => {
     const server = Hapi.server({
         port,
         routes: {
@@ -23,7 +25,7 @@ const init = async () => {
             }
         }
     });
-    console.dir({server});
+    console.dir({ server });
 
     await server.register(require('@hapi/inert'));
 
@@ -44,7 +46,7 @@ const init = async () => {
         path: '/api/pokemons/board',
         handler: () => {
             return BOARD_MIN;
-        }
+        },
     });
 
     server.route({
@@ -53,9 +55,9 @@ const init = async () => {
         handler: (request) => {
             const result = playerTurn(request.payload);
             return {
-                data: result
+                data: result,
             };
-        }
+        },
     });
 
     server.route({
@@ -64,17 +66,17 @@ const init = async () => {
         handler: () => {
             const result = createPlayer();
             return {
-                data: result
+                data: result,
             };
-        }
+        },
     });
 
     await server.start();
     console.log('Server running on %s', server.info.uri);
-
+    console.log(port + 1);
     // const ioServer = http.Server(server);
     // socket(ioServer);
-    //
+
     // ioServer.listen(port + 1, () => {
     //     console.log(`Game socket listening on port ${port + 1}`);
     // });
