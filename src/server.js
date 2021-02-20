@@ -66,12 +66,12 @@ const init = async () => {
     await server.start();
     console.log('Server running on %s', server.info.uri);
 
-    const ioServer = http.Server(server);
-    socket(ioServer);
-
-    ioServer.listen(port + 1, () => {
-        console.log(`Game socket listening on port ${port + 1}`);
-    });
+    // const ioServer = http.Server(server);
+    // socket(ioServer);
+    //
+    // ioServer.listen(port + 1, () => {
+    //     console.log(`Game socket listening on port ${port + 1}`);
+    // });
 };
 
 process.on('unhandledRejection', (err) => {
