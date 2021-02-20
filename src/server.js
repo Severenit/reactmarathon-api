@@ -25,7 +25,6 @@ const init = async () => {
             }
         }
     });
-    console.dir({ server });
 
     await server.register(require('@hapi/inert'));
 

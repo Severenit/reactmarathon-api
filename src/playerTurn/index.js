@@ -3,10 +3,10 @@ import {BOARD} from '../constants';
 export const playerTurn = (payload) => {
     const {position: initialPosition, card: initialCard, board: initialBoard} = payload;
 
-    const card = JSON.parse(initialCard);
+    const card = initialCard;
     const position = Number(initialPosition);
     let cardPlayer = {};
-    const board = JSON.parse(initialBoard).map((item, index) => {
+    const board = initialBoard.map((item, index) => {
         let result = {
             ...BOARD[index],
             ...item
