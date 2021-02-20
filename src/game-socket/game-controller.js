@@ -13,7 +13,10 @@ export default (app) => {
     const gameMode = io.of('/game-mode');
     gameMode.on('connection', async (socket) => {
         const userId = socket.id;
+        console.log('Socket on connection');
+
         socket.emit('get-rooms', rooms);
+
         socket.on('create-room', async (data) => {
             const userPokemons = JSON.parse(data);
             const roomId = randomId();
@@ -27,6 +30,7 @@ export default (app) => {
             rooms.set(room.roomId, room);
             await socket.join(roomId);
         });
+
         socket.on('join-room', async (data) => {
             const userId = socket.id;
             const { roomId, pokemons } = JSON.parse(data);
