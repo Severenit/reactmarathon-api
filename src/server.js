@@ -70,7 +70,7 @@ process.on("unhandledRejection", (err) => {
         method: 'GET',
         path: '/',
         handler: (request, h) => {
-          return 'Hello My Dear Friend!!!'
+          return 'Hello My Dear Friend!!'
         }
     });
 
