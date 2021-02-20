@@ -45,7 +45,9 @@ const init = async () => {
         method: 'GET',
         path: '/api/pokemons/board',
         handler: () => {
-            return BOARD_MIN;
+            return {
+                data: BOARD_MIN
+            };
         },
     });
 
