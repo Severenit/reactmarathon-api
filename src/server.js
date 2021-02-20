@@ -9,7 +9,6 @@ import { createPlayer } from './createPlayer';
 
 const port = process.env.PORT || 4000;
 const host = process.env.HOST || 'localhost';
-const socketPort = 6000;
 
 console.log(port);
 console.log(host);
@@ -78,15 +77,15 @@ const init = async () => {
         },
     });
 
-    await server.start();
-    console.log('Server running on %s', server.info.uri);
-
     const ioServer = http.Server(server);
     socket(ioServer);
 
-    ioServer.listen(socketPort, () => {
-        console.log(`Game socket listening on port ${socketPort}`);
-    });
+    await server.start();
+    console.log('Server running on %s', server.info.uri);
+
+    // ioServer.listen(socketPort, () => {
+    //     console.log(`Game socket listening on port ${socketPort}`);
+    // });
 };
 
 process.on('unhandledRejection', (err) => {
