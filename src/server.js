@@ -83,8 +83,8 @@ const init = async () => {
     await server.start();
     console.log('Server running on %s', server.info.uri);
 
-    ioServer.listen(60000, () => {
-        console.log(`Game socket listening on port ${socketPort}`);
+    ioServer.listen(port, () => {
+        console.log(`Game socket listening on port ${port}`);
     });
 };
 
