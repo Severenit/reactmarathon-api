@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import http from 'http';
 import Hapi from '@hapi/hapi';
+import { Server } from 'socket.io';
 import { BOARD_MIN } from './constants';
 import { socket } from './game-socket/index';
 import { playerTurn } from './playerTurn';
@@ -9,7 +10,6 @@ import { createPlayer } from './createPlayer';
 
 const port = process.env.PORT || 4000;
 const host = process.env.HOST || 'localhost';
-const sockerPort = 6000;
 
 console.log(port);
 console.log(host);
@@ -78,15 +78,12 @@ const init = async () => {
         },
     });
 
+    const io = new Server(server, { path: '/game-mode' });
+    console.log('Socketio initialised!');
+    socket(io);
+
     await server.start();
     console.log('Server running on %s', server.info.uri);
-
-    const ioServer = http.Server(server);
-    socket(ioServer);
-
-    ioServer.listen(sockerPort, () => {
-        console.log(`Game socket listening on port ${sockerPort}`);
-    });
 };
 
 process.on('unhandledRejection', (err) => {

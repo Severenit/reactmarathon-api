@@ -1,15 +1,12 @@
-import {Server} from 'socket.io';
+import { Server } from 'socket.io';
 
 const randomId = () => {
     return Math.floor(Math.random() * 100);
 };
 
-export default (app) => {
+export default (io) => {
     const rooms = new Map();
-
-    const io = new Server(app, {path: '/game-mode'});
-    console.log('Socketio initialised!');
-
+    console.log('Controller started');
     const gameMode = io.of('/game-mode');
     gameMode.on('connection', async (socket) => {
         const userId = socket.id;
@@ -29,7 +26,7 @@ export default (app) => {
         });
         socket.on('join-room', async (data) => {
             const userId = socket.id;
-            const {roomId, pokemons} = JSON.parse(data);
+            const { roomId, pokemons } = JSON.parse(data);
             const room = rooms.get(roomId);
             if (room.opponentId !== 0) {
                 const errMessage = `Room with given id: ${roomId} is actually full`;
