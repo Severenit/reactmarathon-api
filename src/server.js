@@ -73,7 +73,7 @@ const init = async () => {
 
     await server.start();
     console.log('Server running on %s', server.info.uri);
-    console.log(port + 1);
+    // console.log(port + 1);
     // const ioServer = http.Server(server);
     // socket(ioServer);
 
