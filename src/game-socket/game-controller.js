@@ -10,10 +10,13 @@ export default (app) => {
     const io = new Server(app, { path: '/game-mode' });
     console.log('Socketio initialised!');
 
+    io.on('connection', () => {
+        console.log('Socket on connection');
+    });
+
     const gameMode = io.of('/game-mode');
     gameMode.on('connection', async (socket) => {
         const userId = socket.id;
-        console.log('Socket on connection');
 
         socket.emit('get-rooms', rooms);
 
