@@ -7,6 +7,7 @@ import {socket} from './game-socket/index';
 import {playerTurn} from './playerTurn';
 import {createPlayer} from './createPlayer';
 import TripleTriadSolver from './solver';
+import {normalizeData} from './solver/normalize';
 
 const port = process.env.PORT || 4000;
 const host = process.env.HOST || 'localhost';
@@ -65,24 +66,25 @@ const init = async () => {
     });
 
     server.route({
-        method: 'GET',
+        method: 'POST',
         path: '/api/pokemons/game',
-        handler: () => {
-            const solver = new TripleTriadSolver();
-            const {rate, game} = solver.solve(
-                [
-                    [0, [1, 4], [2, 1]],
-                    [0, 0, 0],
-                    [0, 0, 0],
-                ],
-                [[1, 2, 3, 4], [5, 2, 3, 4], [6, 2, 3, 4], [7, 2, 3, 4], [8, 2, 3, 4]],
-                [[4, 4, 4, 4], [5, 6, 6, 6], [6, 8, 9, 9], [7, 7, 7, 7], [1, 1, 1, 1]],
-                5
-            );
+        handler: (request) => {
+            const [handPlayer1, handPlayer2] = normalizeData(request.payload);
+            console.log('####: handPlayer1', handPlayer1);
+            console.log('####: handPlayer2', handPlayer2);
+            // const solver = new TripleTriadSolver();
+            // const {rate, game} = solver.solve(
+            //     [
+            //         [0, 0, 0],
+            //         [0, 0, 0],
+            //         [0, 0, 0],
+            //     ],
+            //     [[1, 2, 3, 4], [5, 2, 3, 4], [6, 2, 3, 4], [7, 2, 3, 4], [8, 2, 3, 4]],
+            //     [[4, 4, 4, 4], [5, 6, 6, 6], [6, 8, 9, 9], [7, 7, 7, 7], [1, 1, 1, 1]],
+            //     5
+            // );
 
-            return {
-                rate, game
-            };
+            return 'Hello';
         }
     });
 

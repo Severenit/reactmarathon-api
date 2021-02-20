@@ -79,8 +79,8 @@ class TripleTriadSolver
         this.count = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         let empty = this.epmtyCells(board);
 
-        if(empty.length >= 7)
-            empty = shuffle(empty);
+        // if(empty.length >= 7)
+        //     empty = shuffle(empty);
 
         if(empty.length > 6 && maxDepth > 5 ) maxDepth = 5;
         if(empty.length === 9 && maxDepth > 4 ) maxDepth = 4;
