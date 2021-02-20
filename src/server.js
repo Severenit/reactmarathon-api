@@ -6,6 +6,7 @@ import {BOARD_MIN} from './constants';
 import {socket} from './game-socket/index';
 import {playerTurn} from './playerTurn';
 import {createPlayer} from './createPlayer';
+import TripleTriadSolver from './solver';
 
 const port = process.env.PORT || 4000;
 const host = process.env.HOST || 'localhost';
@@ -59,6 +60,28 @@ const init = async () => {
             const result = createPlayer();
             return {
                 data: result
+            };
+        }
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/api/pokemons/game',
+        handler: () => {
+            const solver = new TripleTriadSolver();
+            const {rate, game} = solver.solve(
+                [
+                    [0, [1, 4], [2, 1]],
+                    [0, 0, 0],
+                    [0, 0, 0],
+                ],
+                [[1, 2, 3, 4], [5, 2, 3, 4], [6, 2, 3, 4], [7, 2, 3, 4], [8, 2, 3, 4]],
+                [[4, 4, 4, 4], [5, 6, 6, 6], [6, 8, 9, 9], [7, 7, 7, 7], [1, 1, 1, 1]],
+                5
+            );
+
+            return {
+                rate, game
             };
         }
     });
