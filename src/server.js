@@ -83,9 +83,9 @@ const init = async () => {
     await server.start();
     console.log('Server running on %s', server.info.uri);
 
-    ioServer.listen(port, () => {
-        console.log(`Game socket listening on port ${port}`);
-    });
+    // ioServer.listen(port, () => {
+    //     console.log(`Game socket listening on port ${port}`);
+    // });
 };
 
 process.on('unhandledRejection', (err) => {
