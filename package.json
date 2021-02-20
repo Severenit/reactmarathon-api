@@ -6,11 +6,7 @@
     "build:dev": "env NODE_ENV=development webpack --config webpack.config.js",
     "build:prod": "env NODE_ENV=production webpack --config webpack.config.js",
     "start": "npm i && npm run build:prod && node dist/server.js",
-
     "dev": "nodemon dist/server.js"
-
-    "dev": "nodemon dist/server.js"
-
   },
   "repository": "git@github.com:Severenit/reactmarathon-api.git",
   "author": "Zar Zakharov <severenit@gmail.com>",
@@ -25,13 +21,8 @@
     "webpack": "4.44.2",
     "webpack-cli": "3.3.12",
     "webpack-node-externals": "2.5.2"
-
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
-
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.7"
-    }
+  }
 }
