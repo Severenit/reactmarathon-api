@@ -14,6 +14,14 @@ const init = async () => {
 
     const server = Hapi.server({
         port,
+        routes: {
+            cors: {
+                origin: '*',
+                headers: ['Accept', 'Authorization', 'Content-Type', 'If-None-Match'],
+                credentials: true,
+                additionalHeaders: ['X-Requested-With']
+            }
+        }
     });
     console.dir({server});
 
@@ -22,18 +30,6 @@ const init = async () => {
     // server.route.options.cors({
 
     // })
-
-    server.route({
-        options: {
-            cors: {
-                origin: '*',
-                headers: ['Accept', 'Authorization', 'Content-Type', 'If-None-Match'],
-                credentials: true,
-            }
-        },
-        method: '*',
-        path: '/{any*}',
-    });
 
     server.route({
         method: 'GET',
