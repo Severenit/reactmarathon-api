@@ -2,16 +2,13 @@ import fs from 'fs';
 import path from 'path';
 import http from 'http';
 import Hapi from '@hapi/hapi';
-import { BOARD_MIN } from './constants';
+import { BOARD_MIN, STARTER } from './constants';
 import { socket } from './game-socket/index';
 import { playerTurn } from './playerTurn';
 import { createPlayer } from './createPlayer';
 
 const port = process.env.PORT || 4000;
 const host = process.env.HOST || 'localhost';
-
-console.log(port);
-console.log(host);
 
 const init = async () => {
     const server = Hapi.server({
@@ -47,6 +44,16 @@ const init = async () => {
         handler: () => {
             return {
                 data: BOARD_MIN,
+            };
+        },
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/api/pokemons/starter',
+        handler: () => {
+            return {
+                data: STARTER,
             };
         },
     });

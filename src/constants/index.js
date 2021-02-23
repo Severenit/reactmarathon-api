@@ -1,3 +1,5 @@
+import STARTER from './startPack.json';
+
 export const BOARD_MIN = [
     {
         position: 1,
@@ -189,3 +191,7 @@ export const BOARD = [
         ]
     }
 ];
+
+export {
+    STARTER
+};
