@@ -1,5 +1,3 @@
-import fs from 'fs';
-import path from 'path';
 import http from 'http';
 import Hapi from '@hapi/hapi';
 import { BOARD_MIN, STARTER } from './constants';
@@ -8,7 +6,6 @@ import { playerTurn } from './playerTurn';
 import { createPlayer } from './createPlayer';
 
 const port = process.env.PORT || 4000;
-const host = process.env.HOST || 'localhost';
 
 const init = async () => {
     const server = Hapi.server({
