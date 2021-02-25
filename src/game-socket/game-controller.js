@@ -1,102 +1,106 @@
 import { Server } from 'socket.io';
-
-const randomId = () => {
-    return Math.floor(Math.random() * 100);
-};
+import { GameService } from './game-service';
+import { GameView } from './game-view';
 
 export default (app) => {
-    const rooms = new Map();
+    const gameService = new GameService();
+    const gameView = new GameView();
 
-    const io = new Server(app, { path: '/game-mode' });
-    console.log('Socketio initialised!');
-
-    io.on('connection', () => {
-        console.log('Socket on connection');
+    const io = new Server(app, {
+        path: '/game-mode',
+        cors: {
+            origin: 'http://localhost:3000',
+            headers: [
+                'Accept',
+                'Authorization',
+                'Content-Type',
+                'If-None-Match',
+            ],
+            methods: ['GET', 'POST'],
+            allowedHeaders: ['my-custom-header'],
+            credentials: true,
+        },
     });
+    console.log('Socketio initialised!');
 
     const gameMode = io.of('/game-mode');
     gameMode.on('connection', async (socket) => {
-        const userId = socket.id;
+        const userId = socket.handshake.query.username;
 
-        socket.emit('get-rooms', rooms);
+        const checkRoomId = gameService.checkActiveUser(userId);
+        if (checkRoomId) {
+            await socket.join(checkRoomId);
+        }
 
-        socket.on('create-room', async (data) => {
-            const userPokemons = JSON.parse(data);
-            const roomId = randomId();
-            const room = new Room({
-                io: gameMode,
-                socket,
-                userId,
-                userPokemons,
-                roomId,
-            });
-            rooms.set(room.roomId, room);
-            await socket.join(roomId);
-        });
+        console.log(userId + ' connected');
 
-        socket.on('join-room', async (data) => {
-            const userId = socket.id;
-            const { roomId, pokemons } = JSON.parse(data);
-            const room = rooms.get(roomId);
-            if (room.opponentId !== 0) {
-                const errMessage = `Room with given id: ${roomId} is actually full`;
-                console.log(errMessage);
-                socket.emit('room-error', errMessage);
-            } else {
-                room.opponentPokemons(pokemons);
-                room.opponentId(userId);
-                rooms.delete(roomId);
+        socket.emit('get-rooms', roomsView);
+
+        // client create room and wait for another client
+        socket.once('create-room', async (data) => {
+            if (validateData(data) === true) {
+                const roomId = gameService.createRoom(userId, data);
+                const roomsView = gameView.createView(roomId, userId, 'wait');
                 await socket.join(roomId);
-                socket.to(roomId).emit('game-start', room);
-            }
+                socket.emit('get-rooms', roomsView);
+            } else socket.emit('error', 'Validation Error: Bad request');
         });
 
-        socket.on('join-ai', async (data) => {
-            const userId = socket.id;
-            const pokemons = JSON.parse(data);
-            const roomId = randomId();
-            const room = new Room({
-                io: gameMode,
-                socket,
-                userId,
-                pokemons,
-                roomId,
-            });
-            // logic to take AI as opponent
-            await socket.join(roomId);
-            socket.to(roomId).emit('game-start', room);
+        // client join room with another client
+        socket.once('join-room', async (data) => {
+            if (validateData(data) === true) {
+                const { roomId, pokemons } = data;
+                gameService.joinRoom(userId, pokemons, roomId);
+                const roomsView = gameView.updateView(roomId, userId, 'play');
+                await socket.join(roomId);
+                socket.emit('get-rooms', roomsView);
+                socket.to(roomId).emit('game-start', 'game room full');
+            } else socket.emit('error', 'Validation Error: Bad request');
+        });
+
+        // client create and join room with AI
+        socket.once('join-ai', async (data) => {
+            if (validateData(data) === true) {
+                const roomId = gameService.joinAI(userId, data);
+                const roomsView = gameView.createView(roomId, userId, 'ai');
+                await socket.join(roomId);
+                socket.emit('get-rooms', roomsView);
+                socket.to(roomId).emit('game-start', 'game room full');
+            } else socket.emit('error', 'Validation Error: Bad request');
+        });
+
+        // client has not left the room
+        socket.on('disconnecting', async (reason) => {
+            console.log(reason);
+            const roomId = activeUsers.get(userId)[1];
+            socket
+                .to(roomId)
+                .emit(
+                    'connection-closed',
+                    `User with id: ${userId} disconnected from room with id: ${roomId}`,
+                );
+            await socket.leave(roomId);
+        });
+
+        // client has left room
+        socket.on('disconnect', (reason) => {
+            console.log(reason);
         });
     });
 };
 
-class Room {
-    constructor(params) {
-        this.io = params.io; // namespace in our case '/game-mode'
-        this.socket = params.socket;
-
-        this.userId = params.userId;
-        this.userPokemons = params.userPokemons;
-        this.roomId = params.roomId;
-        this.opponentId = 0;
-        this.opponentPokemons = {};
-        this.board = new Board();
+const validateData = (data) => {
+    if (
+        data
+        // (typeof data === Array && data.length === 5) ||
+        // (typeof data === Object &&
+        //     data.hasOwnProperty('pokemons') &&
+        //     data.hasOwnProperty('roomId') &&
+        //     typeof data.pokemons === Array &&
+        //     data.pokemons.length === 5)
+    ) {
+        return true;
+    } else {
+        return false;
     }
-
-    get roomId() {
-        return this.roomId;
-    }
-
-    set opponentPokemons(pokemons) {
-        this.opponentPokemons = pokemons;
-    }
-
-    set opponentId(id) {
-        this.opponentId = id;
-    }
-}
-
-class Board {
-    constructor() {
-        this.board = 'board';
-    }
-}
+};

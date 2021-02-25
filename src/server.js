@@ -73,7 +73,7 @@ const init = async () => {
         },
     });
 
-    const ioServer = http.Server(server);
+    const ioServer = server.listener;
     socket(ioServer);
 
     await server.start();
