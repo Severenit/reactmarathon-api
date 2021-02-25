@@ -1,9 +1,9 @@
 import Hapi from '@hapi/hapi';
-import {BOARD_MIN, STARTER} from './constants';
-import {playerTurn} from './playerTurn';
-import {createPlayer} from './createPlayer';
-import {normalizeData} from './solver/normalize';
-import TripleTriadPlayer from "./solver/TripleTriadPlayer";
+import { BOARD_MIN, STARTER } from './constants';
+import { playerTurn } from './playerTurn';
+import { createPlayer } from './createPlayer';
+import { normalizeData } from './solver/normalize';
+import TripleTriadPlayer from './solver/TripleTriadPlayer';
 
 const port = process.env.PORT || 4000;
 
@@ -59,12 +59,12 @@ const init = async () => {
         method: 'POST',
         path: '/api/pokemons/player-game',
         handler: (request) => {
-            const {p1, p2, board, playerNames, move} = request.payload;
+            const { p1, p2, board, playerNames, move } = request.payload;
 
             const params = {
                 ai: false,
                 currentPlayer: playerNames,
-                hands: {p1, p2},
+                hands: { p1, p2 },
                 move,
                 board,
             };
@@ -93,13 +93,19 @@ const init = async () => {
         method: 'POST',
         path: '/api/pokemons/game',
         handler: (request) => {
-            const {p1, p2, board: initialBoard, playerNames, move} = request.payload;
-            const board = initialBoard.filter(item => item !== 0).length > 0;
+            const {
+                p1,
+                p2,
+                board: initialBoard,
+                playerNames,
+                move,
+            } = request.payload;
+            const board = initialBoard.filter((item) => item !== 0).length > 0;
 
             const params = {
                 ai: true,
                 currentPlayer: playerNames,
-                hands: {p1, p2},
+                hands: { p1, p2 },
                 move,
                 // move: {hits: [1,2,3,4], position: 4},
                 board: board && initialBoard,
@@ -107,10 +113,13 @@ const init = async () => {
 
             const player = new TripleTriadPlayer();
             const turn = player.play(params);
-            
+
             return turn;
-        }
+        },
     });
+
+    const ioServer = server.listener;
+    socket(ioServer);
 
     await server.start();
     console.log('Server running on %s', server.info.uri);

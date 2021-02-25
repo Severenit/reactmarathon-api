@@ -1,22 +1,27 @@
-import { BOARD, BOARD_MIN } from '../../constants/index';
+import { TripleTriadPlayer } from '../../solver/TripleTriadPlayer';
 
 const randomId = () => {
     return Math.floor(Math.random() * 100);
 };
 
-class PlayerEntity {
-    constructor(playerId, playerPokemons) {
-        this.playerId = playerId;
-        this.playerPokemons = playerPokemons;
-    }
-}
+// p1, p2, board, playerNames, move
+
+// {
+//     ai: false,
+//     currentPlayer: playerNames,
+//     hands: { p1, p2 },
+//     move,
+//     board,
+// }
 
 export class Game {
-    constructor(userId, pokemons) {
-        this.player1 = new PlayerEntity(userId, pokemons);
+    constructor(p1, p2, board, playerNames, move) {
         this.roomId = randomId();
-        this.player2;
-        this.board = BOARD_MIN;
+        this.p1 = p1;
+        this.p2 = p2;
+        this.board = board;
+        this.playerNames = playerNames;
+        this.move = move;
     }
 
     createPlayer2(userId, pokemons) {
