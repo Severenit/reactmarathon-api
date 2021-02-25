@@ -60,6 +60,7 @@ const init = async () => {
         path: '/api/pokemons/player-game',
         handler: (request) => {
             const {p1, p2, board, playerNames, move} = request.payload;
+            console.log('####: request.payload', request.payload);
 
             const params = {
                 ai: false,
@@ -93,8 +94,7 @@ const init = async () => {
         method: 'POST',
         path: '/api/pokemons/game',
         handler: (request) => {
-            const {p1, p2, board: initialBoard, playerNames, move} = request.payload;
-            const board = initialBoard.filter(item => item !== 0).length > 0;
+            const {p1, p2, board, playerNames, move} = request.payload;
 
             const params = {
                 ai: true,
@@ -102,12 +102,12 @@ const init = async () => {
                 hands: {p1, p2},
                 move,
                 // move: {hits: [1,2,3,4], position: 4},
-                board: board && initialBoard,
+                board,
             };
 
             const player = new TripleTriadPlayer();
             const turn = player.play(params);
-            
+            console.log('####: turn', turn);
             return turn;
         }
     });
