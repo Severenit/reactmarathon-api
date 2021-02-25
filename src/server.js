@@ -6,8 +6,8 @@ import {BOARD_MIN} from './constants';
 import {socket} from './game-socket/index';
 import {playerTurn} from './playerTurn';
 import {createPlayer} from './createPlayer';
-import TripleTriadSolver from './solver';
 import {normalizeData} from './solver/normalize';
+import TripleTriadPlayer from "./solver/TripleTriadPlayer";
 
 const port = process.env.PORT || 4000;
 const host = process.env.HOST || 'localhost';
@@ -69,9 +69,21 @@ const init = async () => {
         method: 'POST',
         path: '/api/pokemons/game',
         handler: (request) => {
-            const [handPlayer1, handPlayer2] = normalizeData(request.payload);
-            console.log('####: handPlayer1', handPlayer1);
-            console.log('####: handPlayer2', handPlayer2);
+            const { playerNames, move } = request.payload;
+            const [p1, p2, board] = normalizeData(request.payload);
+            console.log('####: move', move);
+            const player = new TripleTriadPlayer();
+            const turn = player.play({
+                ai: true,
+                currentPlayer: playerNames,
+                hands: {p1, p2},
+                // move: {hits: [1,2,3,4], position: 4},
+                board,
+            });
+            console.log('####: turn', turn);
+            //
+            // console.log('####: handPlayer1', handPlayer1);
+            // console.log('####: handPlayer2', handPlayer2);
             // const solver = new TripleTriadSolver();
             // const {rate, game} = solver.solve(
             //     [
