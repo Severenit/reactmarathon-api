@@ -1,31 +1,31 @@
-import fs from 'fs';
-import path from 'path';
-import http from 'http';
 import Hapi from '@hapi/hapi';
-import {BOARD_MIN} from './constants';
-import {socket} from './game-socket/index';
+import {BOARD_MIN, STARTER} from './constants';
 import {playerTurn} from './playerTurn';
 import {createPlayer} from './createPlayer';
 import {normalizeData} from './solver/normalize';
 import TripleTriadPlayer from "./solver/TripleTriadPlayer";
 
 const port = process.env.PORT || 4000;
-const host = process.env.HOST || 'localhost';
 
 const init = async () => {
-
     const server = Hapi.server({
         port,
+        routes: {
+            cors: {
+                origin: ['*'],
+                headers: [
+                    'Accept',
+                    'Authorization',
+                    'Content-Type',
+                    'If-None-Match',
+                ],
+                credentials: true,
+                additionalHeaders: ['X-Requested-With'],
+            },
+        },
     });
-    console.dir({server});
 
     await server.register(require('@hapi/inert'));
-
-    // server.route.options.cors({
-    //     origin: '*',
-    //     headers: ['Accept', 'Authorization', 'Content-Type', 'If-None-Match'],
-    //     credentials: true,
-    // })
 
     server.route({
         method: 'GET',
@@ -39,19 +39,43 @@ const init = async () => {
         method: 'GET',
         path: '/api/pokemons/board',
         handler: () => {
-            return BOARD_MIN;
-        }
+            return {
+                data: BOARD_MIN,
+            };
+        },
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/api/pokemons/starter',
+        handler: () => {
+            return {
+                data: STARTER,
+            };
+        },
     });
 
     server.route({
         method: 'POST',
-        path: '/api/pokemons/players-turn',
+        path: '/api/pokemons/player-game',
         handler: (request) => {
-            const result = playerTurn(request.payload);
-            return {
-                data: result
+            const {p1, p2, board, playerNames, move} = request.payload;
+
+            const params = {
+                ai: false,
+                currentPlayer: playerNames,
+                hands: {p1, p2},
+                move,
+                board,
             };
-        }
+
+            const player = new TripleTriadPlayer();
+            const turn = player.play(params);
+
+            console.log('####: turn', turn);
+
+            return turn;
+        },
     });
 
     server.route({
@@ -60,55 +84,36 @@ const init = async () => {
         handler: () => {
             const result = createPlayer();
             return {
-                data: result
+                data: result,
             };
-        }
+        },
     });
 
     server.route({
         method: 'POST',
         path: '/api/pokemons/game',
         handler: (request) => {
-            const { playerNames, move } = request.payload;
-            const [p1, p2, board] = normalizeData(request.payload);
-            console.log('####: move', move);
-            const player = new TripleTriadPlayer();
-            const turn = player.play({
+            const {p1, p2, board: initialBoard, playerNames, move} = request.payload;
+            const board = initialBoard.filter(item => item !== 0).length > 0;
+
+            const params = {
                 ai: true,
                 currentPlayer: playerNames,
                 hands: {p1, p2},
+                move,
                 // move: {hits: [1,2,3,4], position: 4},
-                board,
-            });
-            console.log('####: turn', turn);
-            //
-            // console.log('####: handPlayer1', handPlayer1);
-            // console.log('####: handPlayer2', handPlayer2);
-            // const solver = new TripleTriadSolver();
-            // const {rate, game} = solver.solve(
-            //     [
-            //         [0, 0, 0],
-            //         [0, 0, 0],
-            //         [0, 0, 0],
-            //     ],
-            //     [[1, 2, 3, 4], [5, 2, 3, 4], [6, 2, 3, 4], [7, 2, 3, 4], [8, 2, 3, 4]],
-            //     [[4, 4, 4, 4], [5, 6, 6, 6], [6, 8, 9, 9], [7, 7, 7, 7], [1, 1, 1, 1]],
-            //     5
-            // );
+                board: board && initialBoard,
+            };
 
-            return 'Hello';
+            const player = new TripleTriadPlayer();
+            const turn = player.play(params);
+            
+            return turn;
         }
     });
 
     await server.start();
     console.log('Server running on %s', server.info.uri);
-
-    const ioServer = http.Server(server);
-    socket(ioServer);
-
-    ioServer.listen(port + 1, () => {
-        console.log(`Game socket listening on port ${port + 1}`);
-    });
 };
 
 process.on('unhandledRejection', (err) => {

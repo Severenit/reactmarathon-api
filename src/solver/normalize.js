@@ -12,29 +12,6 @@ const normalizePlayer = (player) => {
 }
 export const normalizeData = (payload) => {
     const {player1: initialPlayer1, player2: initialPlayer2, board: initialBoard} = payload;
-    const player1 = JSON.parse(initialPlayer1);
-    const player2 = JSON.parse(initialPlayer2);
-    const board = JSON.parse(initialBoard);
-    
-    const normalizeBoard = board.reduce((acc, item, index) => {
-        const row = Math.floor(index / 3);
-        const column = index % 3;
 
-        if (!acc[row]) {
-            acc[row] = [];
-        }
-
-        if (item.card) {
-            acc[row][column] = [item.card.player, item.position];
-        } else {
-            acc[row][column] = [0];
-        }
-
-
-        return acc;
-    }, []);
-    
-    console.log('####: nB', normalizeBoard);
-
-    return [normalizePlayer(player1), normalizePlayer(player2)];
+    return [0, 0, 0];
 };
