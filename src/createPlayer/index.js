@@ -1,4 +1,4 @@
-import pokemonsJSON from '../constants/pokemonsData.json';
+import pokemonsJSON from '../constants/pokemonsUpdate.json';
 
 export const createPlayer = () => {
     const length = pokemonsJSON.length;

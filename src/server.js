@@ -1,9 +1,9 @@
-import http from 'http';
 import Hapi from '@hapi/hapi';
-import { BOARD_MIN, STARTER } from './constants';
-import { socket } from './game-socket/index';
-import { playerTurn } from './playerTurn';
-import { createPlayer } from './createPlayer';
+import {BOARD_MIN, STARTER} from './constants';
+import {playerTurn} from './playerTurn';
+import {createPlayer} from './createPlayer';
+import {normalizeData} from './solver/normalize';
+import TripleTriadPlayer from "./solver/TripleTriadPlayer";
 
 const port = process.env.PORT || 4000;
 
@@ -57,12 +57,24 @@ const init = async () => {
 
     server.route({
         method: 'POST',
-        path: '/api/pokemons/players-turn',
+        path: '/api/pokemons/player-game',
         handler: (request) => {
-            const result = playerTurn(request.payload);
-            return {
-                data: result,
+            const {p1, p2, board, playerNames, move} = request.payload;
+
+            const params = {
+                ai: false,
+                currentPlayer: playerNames,
+                hands: {p1, p2},
+                move,
+                board,
             };
+
+            const player = new TripleTriadPlayer();
+            const turn = player.play(params);
+
+            console.log('####: turn', turn);
+
+            return turn;
         },
     });
 
@@ -77,14 +89,31 @@ const init = async () => {
         },
     });
 
-    const ioServer = server.listener;
-    socket(ioServer);
+    server.route({
+        method: 'POST',
+        path: '/api/pokemons/game',
+        handler: (request) => {
+            const {p1, p2, board: initialBoard, playerNames, move} = request.payload;
+            const board = initialBoard.filter(item => item !== 0).length > 0;
+
+            const params = {
+                ai: true,
+                currentPlayer: playerNames,
+                hands: {p1, p2},
+                move,
+                // move: {hits: [1,2,3,4], position: 4},
+                board: board && initialBoard,
+            };
+
+            const player = new TripleTriadPlayer();
+            const turn = player.play(params);
+            
+            return turn;
+        }
+    });
 
     await server.start();
     console.log('Server running on %s', server.info.uri);
-    // ioServer.listen(port, () => {
-    //     console.log(`Game socket listening on port ${port}`);
-    // });
 };
 
 process.on('unhandledRejection', (err) => {
