@@ -1,28 +1,29 @@
 {
-  "name": "reactmarathon-api",
-  "version": "1.0.0",
-  "main": "src/server.js",
-  "scripts": {
-    "build:dev": "env NODE_ENV=development webpack --config webpack.config.js",
-    "build:prod": "env NODE_ENV=production webpack --config webpack.config.js",
-    "start": "npm i && npm run build:prod && node dist/server.js",
-    "dev": "nodemon dist/server.js"
-  },
-  "repository": "git@github.com:Severenit/reactmarathon-api.git",
-  "author": "Zar Zakharov <severenit@gmail.com>",
-  "license": "MIT",
-  "dependencies": {
-    "@hapi/hapi": "^20.1.0",
-    "@hapi/inert": "^6.0.3",
-    "socket.io": "^3.1.1",
-    "socket.io-client": "^3.1.1",
-    "ts-loader": "^8.0.17",
-    "typescript": "^4.1.5",
-    "webpack": "4.44.2",
-    "webpack-cli": "3.3.12",
-    "webpack-node-externals": "2.5.2"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.7"
-  }
+    "name": "reactmarathon-api",
+    "version": "1.0.0",
+    "main": "src/server.js",
+    "type": "module",
+    "scripts": {
+        "build:dev": "env NODE_ENV=development webpack --config webpack.config.js",
+        "build:prod": "env NODE_ENV=production webpack --config webpack.config.js",
+        "start": "npm i && npm run build:prod && node dist/server.js",
+        "dev": "nodemon dist/server.js"
+    },
+    "repository": "git@github.com:Severenit/reactmarathon-api.git",
+    "author": "Zar Zakharov <severenit@gmail.com>",
+    "license": "MIT",
+    "dependencies": {
+        "@hapi/hapi": "^20.1.0",
+        "@hapi/inert": "^6.0.3",
+        "socket.io": "^3.1.1",
+        "socket.io-client": "^3.1.1",
+        "ts-loader": "^8.0.17",
+        "typescript": "^4.1.5",
+        "webpack": "4.44.2",
+        "webpack-cli": "3.3.12",
+        "webpack-node-externals": "2.5.2"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.7"
+    }
 }
