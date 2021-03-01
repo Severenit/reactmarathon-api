@@ -4,13 +4,15 @@ export class GameView {
     }
 
     createView(roomId, userId, status) {
-        roomsView[roomId] = { members: [userId], status: status };
-        return this.roomsView;
+        this.roomsView[roomId] = { members: [userId], status: status };
     }
 
     updateView(roomId, userId, status) {
-        roomsView[roomId].members.push(userId);
-        roomsView[roomId].status = status;
-        return this.roomsView;
+        this.roomsView[roomId].members.push(userId);
+        this.roomsView[roomId].status = status;
+    }
+
+    deleteView(roomId) {
+        delete this.roomsView[roomId];
     }
 }

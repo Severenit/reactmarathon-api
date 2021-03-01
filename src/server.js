@@ -4,6 +4,7 @@ import { playerTurn } from './playerTurn';
 import { createPlayer } from './createPlayer';
 import { normalizeData } from './solver/normalize';
 import TripleTriadPlayer from './solver/TripleTriadPlayer';
+import { socket } from './game-socket/index';
 
 const port = process.env.PORT || 4000;
 
