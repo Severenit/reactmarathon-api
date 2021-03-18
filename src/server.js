@@ -119,8 +119,7 @@ const init = async () => {
         },
     });
 
-    const ioServer = server.listener;
-    socket(ioServer);
+    socket(server.listener);
 
     await server.start();
     console.log('Server running on %s', server.info.uri);
