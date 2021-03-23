@@ -1,7 +1,11 @@
-import {BOARD} from '../constants/index.js';
+const { BOARD } = require('../constants/constants');
 
-export const playerTurn = (payload) => {
-    const {position: initialPosition, card: initialCard, board: initialBoard} = payload;
+const playerTurn = (payload) => {
+    const {
+        position: initialPosition,
+        card: initialCard,
+        board: initialBoard,
+    } = payload;
 
     const card = initialCard;
     const position = Number(initialPosition);
@@ -9,7 +13,7 @@ export const playerTurn = (payload) => {
     const board = initialBoard.map((item, index) => {
         let result = {
             ...BOARD[index],
-            ...item
+            ...item,
         };
 
         if (item.position === position) {
@@ -25,11 +29,11 @@ export const playerTurn = (payload) => {
 
     const cards = board;
 
-    cardPlayer.side.forEach(item => {
+    cardPlayer.side.forEach((item) => {
         let cardOnBoard;
         let player2Board;
 
-        const fieldCard = cards.find(field => {
+        const fieldCard = cards.find((field) => {
             if (field.position === item.pos && field.card !== null) {
                 cardOnBoard = item.weak;
                 return true;
@@ -38,23 +42,33 @@ export const playerTurn = (payload) => {
         });
 
         if (fieldCard) {
-            fieldCard.side.forEach(a => {
+            fieldCard.side.forEach((a) => {
                 if (a.pos === position) {
                     player2Board = a.weak;
                 }
             });
 
-            const fightSide2Card = cardPlayer.card.values[player2Board] === 'A' ? 10 : cardPlayer.card.values[player2Board];
-            const cardOnBoardCard = fieldCard.card.values[cardOnBoard] === 'A' ? 10 : fieldCard.card.values[cardOnBoard];
+            const fightSide2Card =
+                cardPlayer.card.values[player2Board] === 'A'
+                    ? 10
+                    : cardPlayer.card.values[player2Board];
+            const cardOnBoardCard =
+                fieldCard.card.values[cardOnBoard] === 'A'
+                    ? 10
+                    : fieldCard.card.values[cardOnBoard];
 
             if (fightSide2Card > cardOnBoardCard) {
-                cards.find(c => c.position === fieldCard.position).card.possession = cardPlayer.card.possession;
+                cards.find(
+                    (c) => c.position === fieldCard.position
+                ).card.possession = cardPlayer.card.possession;
             }
         }
     });
 
-    return cards.map(item => {
+    return cards.map((item) => {
         delete item.side;
         return item;
     });
 };
+
+module.exports = playerTurn;

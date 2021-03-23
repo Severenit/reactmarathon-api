@@ -1,10 +1,12 @@
 import Hapi from '@hapi/hapi';
-import { BOARD_MIN, STARTER } from './constants';
+import { BOARD_MIN, STARTER } from './constants/index.js';
 import { playerTurn } from './playerTurn';
 import { createPlayer } from './createPlayer';
 import { normalizeData } from './solver/normalize';
 import TripleTriadPlayer from './solver/TripleTriadPlayer';
 import { socket } from './game-socket/index';
+import { db } from './db';
+
 
 const port = process.env.PORT || 4000;
 
