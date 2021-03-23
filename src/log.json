@@ -1,0 +1,223 @@
+{
+  "228": {
+    "roomId": "228",
+    "status": "wait",
+    "p1": {
+      "owner": "p1",
+      "userId": "Putin228",
+      "pokemons": [
+        {
+          "abilities": ["overgrow", "chlorophyll"],
+          "base_experience": 64,
+          "height": 7,
+          "weight": 69,
+          "id": 1,
+          "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
+          "name": "bulbasaur",
+          "stats": {
+            "hp": 45,
+            "attack": 49,
+            "defense": 49,
+            "special-attack": 65,
+            "special-defense": 65,
+            "speed": 45
+          },
+          "type": "grass",
+          "values": { "top": 1, "right": 3, "bottom": 2, "left": 4 },
+          "hits": [1, 3, 2, 4]
+        },
+        {
+          "abilities": ["blaze", "solar-power"],
+          "base_experience": 62,
+          "height": 6,
+          "weight": 85,
+          "id": 4,
+          "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png",
+          "name": "charmander",
+          "stats": {
+            "hp": 39,
+            "attack": 52,
+            "defense": 43,
+            "special-attack": 60,
+            "special-defense": 50,
+            "speed": 65
+          },
+          "type": "fire",
+          "values": { "top": 2, "right": 1, "bottom": 5, "left": 3 },
+          "hits": [2, 1, 5, 3]
+        },
+        {
+          "abilities": ["torrent", "rain-dish"],
+          "base_experience": 63,
+          "height": 5,
+          "weight": 90,
+          "id": 7,
+          "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png",
+          "name": "squirtle",
+          "stats": {
+            "hp": 44,
+            "attack": 48,
+            "defense": 65,
+            "special-attack": 50,
+            "special-defense": 64,
+            "speed": 43
+          },
+          "type": "water",
+          "values": { "top": 2, "right": 5, "bottom": 1, "left": 4 },
+          "hits": [2, 5, 1, 4]
+        },
+        {
+          "abilities": ["static", "lightning-rod"],
+          "base_experience": 112,
+          "height": 4,
+          "weight": 60,
+          "id": 25,
+          "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png",
+          "name": "pikachu",
+          "stats": {
+            "hp": 35,
+            "attack": 55,
+            "defense": 40,
+            "special-attack": 50,
+            "special-defense": 50,
+            "speed": 90
+          },
+          "type": "electric",
+          "values": { "top": 2, "right": 3, "bottom": 3, "left": 5 },
+          "hits": [2, 3, 3, 5]
+        },
+        {
+          "abilities": ["keen-eye", "tangled-feet", "big-pecks"],
+          "base_experience": 122,
+          "height": 11,
+          "weight": 300,
+          "id": 17,
+          "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/17.png",
+          "name": "pidgeotto",
+          "stats": {
+            "hp": 63,
+            "attack": 60,
+            "defense": 55,
+            "special-attack": 50,
+            "special-defense": 50,
+            "speed": 71
+          },
+          "type": "normal",
+          "values": { "top": 1, "right": 2, "bottom": 3, "left": 2 },
+          "hits": [1, 2, 3, 2]
+        }
+      ]
+    },
+    "p2": { "owner": "", "pokemons": [], "userId": "" },
+    "board": [],
+    "move": {},
+    "hands": {
+      "p1": [
+        {
+          "abilities": ["overgrow", "chlorophyll"],
+          "base_experience": 64,
+          "height": 7,
+          "weight": 69,
+          "id": 1,
+          "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
+          "name": "bulbasaur",
+          "stats": {
+            "hp": 45,
+            "attack": 49,
+            "defense": 49,
+            "special-attack": 65,
+            "special-defense": 65,
+            "speed": 45
+          },
+          "type": "grass",
+          "values": { "top": 1, "right": 3, "bottom": 2, "left": 4 },
+          "hits": [1, 3, 2, 4]
+        },
+        {
+          "abilities": ["blaze", "solar-power"],
+          "base_experience": 62,
+          "height": 6,
+          "weight": 85,
+          "id": 4,
+          "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png",
+          "name": "charmander",
+          "stats": {
+            "hp": 39,
+            "attack": 52,
+            "defense": 43,
+            "special-attack": 60,
+            "special-defense": 50,
+            "speed": 65
+          },
+          "type": "fire",
+          "values": { "top": 2, "right": 1, "bottom": 5, "left": 3 },
+          "hits": [2, 1, 5, 3]
+        },
+        {
+          "abilities": ["torrent", "rain-dish"],
+          "base_experience": 63,
+          "height": 5,
+          "weight": 90,
+          "id": 7,
+          "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png",
+          "name": "squirtle",
+          "stats": {
+            "hp": 44,
+            "attack": 48,
+            "defense": 65,
+            "special-attack": 50,
+            "special-defense": 64,
+            "speed": 43
+          },
+          "type": "water",
+          "values": { "top": 2, "right": 5, "bottom": 1, "left": 4 },
+          "hits": [2, 5, 1, 4]
+        },
+        {
+          "abilities": ["static", "lightning-rod"],
+          "base_experience": 112,
+          "height": 4,
+          "weight": 60,
+          "id": 25,
+          "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png",
+          "name": "pikachu",
+          "stats": {
+            "hp": 35,
+            "attack": 55,
+            "defense": 40,
+            "special-attack": 50,
+            "special-defense": 50,
+            "speed": 90
+          },
+          "type": "electric",
+          "values": { "top": 2, "right": 3, "bottom": 3, "left": 5 },
+          "hits": [2, 3, 3, 5]
+        },
+        {
+          "abilities": ["keen-eye", "tangled-feet", "big-pecks"],
+          "base_experience": 122,
+          "height": 11,
+          "weight": 300,
+          "id": 17,
+          "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/17.png",
+          "name": "pidgeotto",
+          "stats": {
+            "hp": 63,
+            "attack": 60,
+            "defense": 55,
+            "special-attack": 50,
+            "special-defense": 50,
+            "speed": 71
+          },
+          "type": "normal",
+          "values": { "top": 1, "right": 2, "bottom": 3, "left": 2 },
+          "hits": [1, 2, 3, 2]
+        }
+      ]
+    },
+    "rate": 0,
+    "beaten": [],
+    "empty": [],
+    "turnOwner": ""
+  }
+}

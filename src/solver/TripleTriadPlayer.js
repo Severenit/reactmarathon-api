@@ -1,4 +1,4 @@
-import TripleTriadSolver from './TripleTriadSolver';
+import TripleTriadSolver from './TripleTriadSolver.js';
 
 const solver = new TripleTriadSolver();
 

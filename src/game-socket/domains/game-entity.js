@@ -1,13 +1,13 @@
-import { TripleTriadPlayer } from '../../solver/TripleTriadPlayer';
+const TripleTriadPlayer = require('../../solver/tripleTriadPlayerNew');
 
-const randomId = () => {
-    const id = Math.floor(Math.random() * 100);
-    return `${id}`;
-};
+// const randomId = () => {
+//     const id = Math.floor(Math.random() * 100);
+//     return `${id}`;
+// };
 
-const randomBool = () => {
-    return Math.random() < 0.5;
-};
+// const randomBool = () => {
+//     return Math.random() < 0.5;
+// };
 // p1, p2, board, playerNames, move
 
 // {
@@ -18,9 +18,8 @@ const randomBool = () => {
 //     board,
 // }
 
-export class Game {
+class Game {
     constructor() {
-        this.roomId = '228';
         this.status = '';
         this.p1 = { owner: '', pokemons: [], userId: '' };
         this.p2 = { owner: '', pokemons: [], userId: '' };
@@ -34,7 +33,7 @@ export class Game {
     }
 
     firstTurnOwner() {
-        if (randomBool()) {
+        if (Math.random() < 0.5) {
             this.turnOwner = 'p1';
         }
         this.turnOwner = 'p2';
@@ -69,11 +68,10 @@ export class Game {
         this.status = 'wait';
     }
 
-    onPlayerTurn(payload) {
+    onPlayerTurn(move, p1, p2, playerNames) {
         if (this.status === finish) {
             return;
         }
-        const { move, p1, p2, playerNames } = payload;
 
         if (playerNames === this.turnOwner) {
             const params = {
@@ -113,3 +111,5 @@ export class Game {
         };
     }
 }
+
+module.exports = Game;
