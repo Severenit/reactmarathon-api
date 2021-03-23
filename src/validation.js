@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const lvl1PayloadSchema = Joi.object({
+const everyMessageSchema = Joi.object({
   type: Joi.string().required(),
   data: Joi.object().required(),
 });
@@ -81,9 +81,9 @@ const playerTurnSchema = Joi.object({
   p2: Joi.object().required(),
 });
 
-const lvl1Validation = (payload) => {
+const everyMessageValidation = (payload) => {
   try {
-    lvl1PayloadSchema.validate(payload);
+    everyMessageSchema.validate(payload);
     console.log('Validation success!');
     return true;
   } catch (error) {
@@ -122,7 +122,7 @@ const playerTurnValidation = (data) => {
 };
 
 module.exports = {
-  lvl1Validation,
+  everyMessageValidation,
   createRoomValidation,
   joinRoomValidation,
   playerTurnValidation,

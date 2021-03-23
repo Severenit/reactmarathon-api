@@ -1,6 +1,6 @@
 const uWS = require('uWebSockets.js');
 const {
-  lvl1Validation,
+  everyMessageValidation,
   createRoomValidation,
   joinRoomValidation,
   playerTurnValidation,
@@ -8,7 +8,7 @@ const {
 const { v4: uuidv4 } = require('uuid');
 const Game = require('./game-socket/domains/game-entity');
 const RoomService = require('./game-socket/rooms-service');
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 4001;
 
 const sockets = new Map();
 const games = new Map();
@@ -106,7 +106,9 @@ server
         ws.send(err.toString());
       }
     },
-    drain: (ws) => {},
+    drain: (ws) => {
+
+		},
     close: (ws, code, message) => {
       /* The library guarantees proper unsubscription at close */
       if (sockets.has(ws.id)) {
@@ -120,9 +122,6 @@ server
 			console.log(games);
       console.log('Socket closed');
     },
-  })
-  .any('/*', (res, req) => {
-    res.end('Nothing to see here!');
   })
   .listen(port, (token) => {
     if (token) {
