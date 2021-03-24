@@ -19,20 +19,6 @@ export default (app) => {
         ws.send('message');
     });
 
-    app.on('upgrade', (req, socket, head) => {
-        authenticate(req, (err, client) => {
-            if (err || !client) {
-              socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');
-              socket.destroy();
-              return;
-            }
-        
-            wss.handleUpgrade(req, socket, head, function done(ws) {
-              wss.emit('connection', ws, req, client);
-            });
-          });
-    })
-
     // const io = new Server(app, {
     //     path: '/game-mode',
     //     cors: {

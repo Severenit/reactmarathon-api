@@ -53,7 +53,7 @@ server
 
       ws.publish('/rooms', JSON.stringify(roomService.rooms));
 
-      if (lvl1Validation(payload) === true) {
+      if (everyMessageValidation(payload) === true) {
         const { type, data } = payload;
 
         if ((type === 'createRoom') & (createRoomValidation(data) === true)) {
