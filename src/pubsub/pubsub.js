@@ -1,4 +1,4 @@
-class PubSubManager {
+export class PubSubManager {
   constructor() {
     this.channels = {
       test: {
@@ -10,17 +10,27 @@ class PubSubManager {
       this.broker();
     }, 1000);
   }
+
   createChannel(symbol) {
-    this.channel[symbol] = {
+    this.channels[symbol] = {
       message: '',
       subscribers: [],
     };
   }
 
+	deleteChannel(symbol) {
+		delete this.channel[symbol];
+	}
+
   subscribe(subscriber, channel) {
     console.log(`subscribing to ${channel}`);
     this.channels[channel].subscribers.push(subscriber);
   }
+
+	unsubscribe(subscriber, channel) {
+		const newSubs = this.channels[channel].subscribers.filter(sub => sub.id === subscriber.id);
+		this.channels[channel].subscribers = newSubs;
+	}
 
   removeBroker() {
     clearInterval(this.brokerId);
@@ -51,4 +61,3 @@ class PubSubManager {
     }
   }
 }
-module.exports = PubSubManager;

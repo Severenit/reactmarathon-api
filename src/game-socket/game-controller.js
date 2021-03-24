@@ -1,155 +1,129 @@
 import WebSocket from 'ws';
-import { GameService } from './game-service';
-import { GameView } from './game-view';
+import { Game } from './game-service';
+import { RoomService } from './rooms-service-es.js';
+import { PubSubManager } from '../pubsub/pubsub';
+import { v4 } from 'uuid';
+import {
+  everyMessageValidation,
+  createRoomValidation,
+  joinRoomValidation,
+  playerTurnValidation,
+} from '../validation-es.js';
 
 export default (app) => {
-    const gameService = new GameService();
-    const gameView = new GameView();
-    const disconnectedUsers = new Map();
+  const roomService = new RoomService();
+  const sockets = new Map();
+  const games = new Map();
+  const pubSubManager = new PubSubManager();
 
-    const wss = new WebSocket.Server({ noServer: true, clientTracking: true });
+  pubSubManager.createChannel('/rooms');
 
-    wss.on('connection', (ws, request, client) => {
-        ws.on('message', (message) => {
-            console.log('Recieved: ', message);
-            // console.log(request);
-            console.log(client);
+  const wss = new WebSocket.Server({ server: app });
 
-        })
-        ws.send('message');
+  wss.on('connection', (ws, request, client) => {
+    ws.id = v4();
+    console.log('Websocket connected');
+    pubSubManager.subscribe(ws, '/rooms');
+
+    ws.on('message', (message) => {
+      const parseMessage = (msg) => {
+        try {
+          return JSON.parse(msg);
+        } catch (err) {
+          console.log(err);
+          ws.send(JSON.stringify(err));
+          ws.terminate();
+        }
+      };
+
+      const payload = parseMessage(message);
+
+      pubSubManager.publish(ws, '/rooms', JSON.stringify(roomService.rooms));
+
+      if (everyMessageValidation(payload) === true) {
+        const { type, data } = payload;
+
+        if ((type === 'createRoom') & (createRoomValidation(data) === true)) {
+          const { userId, username, roomname, pokemons } = data;
+          const roomId = roomService.addRoom(userId, username, roomname);
+          sockets.set(ws.id, { userId: userId, roomId: roomId });
+
+          const game = new Game();
+          game.createPlayer1(userId, pokemons);
+          games.set(roomId, game);
+
+          console.log(roomService.rooms);
+          pubSubManager.publish(
+            ws,
+            '/rooms',
+            JSON.stringify(roomService.rooms)
+          );
+          pubSubManager.unsubscribe(ws, '/rooms');
+					
+					pubSubManager.createChannel(`/play/${roomId}`);
+          pubSubManager.subscribe(ws, `/play/${roomId}`);
+          pubSubManager.publish(ws, `/play/${roomId}`, JSON.stringify(game));
+        } else if (
+          (type === 'joinRoom') &
+          (joinRoomValidation(data) === true)
+        ) {
+          const { userId, roomId, pokemons } = data;
+
+          const game = games.get(roomId);
+          game.createPlayer2(userId, pokemons);
+          games.set(roomId, game);
+
+          roomService.deleteRoom(roomId);
+          pubSubManager.subscribe(ws, `/play/${roomId}`);
+          pubSubManager.publish(ws, `/play/${roomId}`, JSON.stringify(game));
+        } else if (
+          (type === 'playerTurn') &
+          (playerTurnValidation(data) === true)
+        ) {
+          const { roomId, move, p1, p2, playerNames } = data;
+
+          const game = games.get(roomId);
+          game.onPlayerTurn(move, p1, p2, playerNames);
+          games.set(roomId, game);
+
+          pubSubManager.publish(ws, `/play/${roomId}`, JSON.stringify(game));
+        } else {
+          const err = new Error('Invalid request type');
+          console.log(err);
+          ws.send(JSON.stringify(err));
+        }
+      } else {
+        const err = new Error('Invalid request type');
+        console.log(err);
+        ws.send(JSON.stringify(err));
+      }
     });
 
-    // const io = new Server(app, {
-    //     path: '/game-mode',
-    //     cors: {
-    //         origin: 'http://home-host:3000',
-    //         headers: [
-    //             'Accept',
-    //             'Authorization',
-    //             'Content-Type',
-    //             'If-None-Match',
-    //         ],
-    //         methods: ['GET', 'POST'],
-    //         allowedHeaders: ['my-custom-header'],
-    //         credentials: true,
-    //     },
-    // });
-    // console.log('Socketio initialised!');
+    ws.on('close', () => {
+      if (sockets.has(ws.id)) {
+        const userIds = sockets.get(ws.id);
+        roomService.deleteRoom(userIds.roomId);
+        if (games.has(userIds.roomId)) {
+          games.delete(userIds.roomId);
+        }
+      }
+      console.log(roomService.rooms);
+      console.log(games);
+      console.log('Socket closed');
+    });
 
-    // const gameMode = io.of('/game-mode');
-    // gameMode.on('connection', async (socket) => {
-    //     const userId = socket.handshake.query.username;
+  });
 
-    //     const checkRoomId = gameService.checkActiveUser(userId);
-    //     if (checkRoomId) {
-    //         disconnectedUsers.delete(userId);
-    //         await socket.join(checkRoomId);
-    //         socket
-    //             .to(checkRoomId)
-    //             .emit('on-game', gameService.getGameState(checkRoomId));
-    //     }
+  // app.on('upgrade', (req, socket, head) => {
+  // 	// authenticate(req, (err, client) => {
+  // 			// if (err || !client) {
+  // 			//   socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');
+  // 			//   socket.destroy();
+  // 			//   return;
+  // 			// }
 
-    //     console.log(userId + ' connected');
-
-    //     // socket.emit('get-rooms', gameView.roomsView);
-
-    //     // client create room and wait for another client
-    //     socket.once('create-room', async (data) => {
-    //         if (validateData(data) === true) {
-    //             const roomId = gameService.createRoom(userId, data);
-    //             console.log(roomId);
-    //             gameView.createView(roomId, userId, 'wait');
-    //             console.log(gameView.roomsView);
-    //             await socket.join(roomId);
-    //             const view = gameView.roomsView;
-    //             socket.emit('get-rooms', view);
-    //         } else socket.emit('error', 'Validation Error: Bad request');
-    //     });
-
-    //     // client join room with another client
-    //     socket.once('join-room', async (data) => {
-    //         if (validateData(data) === true) {
-    //             console.log('#### User Data: ');
-    //             console.log(data);
-    //             const { roomId, pokemons } = data;
-    //             gameService.joinRoom(userId, pokemons, roomId);
-    //             gameView.updateView(roomId, userId, 'play');
-    //             await socket.join(roomId);
-    //             // socket.emit('get-rooms', gameView.roomsView);
-    //             const game = gameService.getGameState(roomId);
-    //             socket.to(roomId).emit('on-game', game);
-    //         } else socket.emit('error', 'Validation Error: Bad request');
-    //     });
-
-    //     // client create and join room with AI
-    //     socket.once('join-ai', async (data) => {
-    //         if (validateData(data) === true) {
-    //             const roomId = gameService.joinAI(userId, data);
-    //             const roomsView = gameView.createView(roomId, userId, 'ai');
-    //             await socket.join(roomId);
-    //             // socket.emit('get-rooms', roomsView);
-    //             const game = gameService.getGameState(roomId);
-    //             socket.to(roomId).emit('on-game', game);
-    //         } else socket.emit('error', 'Validation Error: Bad request');
-    //     });
-
-    //     socket.on('player-turn', async (data) => {
-    //         if (validateData(data) === true) {
-    //             const roomId = gameService.playerTurn(data, userId);
-    //             socket
-    //                 .to(roomId)
-    //                 .emit('on-game', gameService.getGameState(roomId));
-    //         }
-    //     });
-
-    //     socket.on('finish-game', async (data) => {
-    //         const response = gameService.finishGame(data.roomId);
-    //         socket.to(data.roomId).emit('finish', response);
-    //         await socket.leave(data.roomId);
-    //     });
-
-    //     // client has not left the room
-    //     // socket.on('disconnecting', async (reason) => {
-    //     //     console.log(reason);
-    //     //     const roomId = gameService.activeUsers.get(userId);
-    //     //     socket
-    //     //         .to(roomId)
-    //     //         .emit(
-    //     //             'connection-closed',
-    //     //             `User with id: ${userId} disconnected from room with id: ${roomId}`,
-    //     //         );
-    //     //     await socket.leave(roomId);
-    //     // });
-
-    //     // client has left room
-    //     socket.on('disconnecting', async (reason) => {
-    //         console.log(reason);
-    //         const roomId = gameService.activeUsers.get(userId);
-    //         disconnectedUsers.set(userId, socket.id);
-    //         await socket.leave(roomId);
-    //         // crazy users can make event loop overusage
-    //         setTimeout(() => {
-    //             if (disconnectedUsers.has(userId)) {
-    //                 gameService.disconnectUser(userId);
-    //                 gameView.deleteView(roomId);
-    //             }
-    //         }, 30000);
-    //     });
-    // });
-};
-
-const validateData = (data) => {
-    if (
-        data
-        // (typeof data === Array && data.length === 5) ||
-        // (typeof data === Object &&
-        //     data.hasOwnProperty('pokemons') &&
-        //     data.hasOwnProperty('roomId') &&
-        //     typeof data.pokemons === Array &&
-        //     data.pokemons.length === 5)
-    ) {
-        return true;
-    } else {
-        return false;
-    }
+  // 			wss.handleUpgrade(req, socket, head, function done(ws) {
+  // 				wss.emit('connection', ws, req, client);
+  // 			});
+  // 		});
 };
