@@ -1,6 +1,6 @@
 import WebSocket from 'ws';
 import { Game } from './game-service';
-import { RoomService } from './rooms-service-es.js';
+import { RoomService } from './rooms-service';
 import { PubSubManager } from '../pubsub/pubsub';
 import { v4 } from 'uuid';
 import {
@@ -8,7 +8,7 @@ import {
   createRoomValidation,
   joinRoomValidation,
   playerTurnValidation,
-} from '../validation-es.js';
+} from '../validation.js';
 
 export default (app) => {
   const roomService = new RoomService();
@@ -62,7 +62,11 @@ export default (app) => {
 
           pubSubManager.createChannel(`/play/${roomId}`);
           pubSubManager.subscribe(ws, `/play/${roomId}`);
-          pubSubManager.publish(ws, `/play/${roomId}`, JSON.stringify(game));
+          pubSubManager.publish(
+            ws,
+            `/play/${roomId}`,
+            JSON.stringify(game.getGameState(roomId))
+          );
         } else if (
           (type === 'joinRoom') &
           (joinRoomValidation(data) === true)
@@ -75,18 +79,46 @@ export default (app) => {
 
           roomService.deleteRoom(roomId);
           pubSubManager.subscribe(ws, `/play/${roomId}`);
-          pubSubManager.publish(ws, `/play/${roomId}`, JSON.stringify(game));
+          pubSubManager.publish(
+            ws,
+            `/play/${roomId}`,
+            JSON.stringify(game.getGameState(roomId))
+          );
         } else if (
           (type === 'playerTurn') &
           (playerTurnValidation(data) === true)
         ) {
-          const { roomId, move, p1, p2, playerNames } = data;
+          const { roomId, userId, position, card } = data;
 
           const game = games.get(roomId);
-          game.onPlayerTurn(move, p1, p2, playerNames);
+          const isFinish = game.onPlayerTurn(userId, position, card);
+
           games.set(roomId, game);
 
-          pubSubManager.publish(ws, `/play/${roomId}`, JSON.stringify(game));
+          if (isFinish === true) {
+            pubSubManager.publish(
+              ws,
+              `/play/${roomId}`,
+              JSON.stringify(game.onFinishGame())
+            );
+            ws.terminate();
+            if (sockets.has(ws.id)) {
+              const userIds = sockets.get(ws.id);
+              roomService.deleteRoom(userIds.roomId);
+              if (games.has(userIds.roomId)) {
+                games.delete(userIds.roomId);
+              }
+            }
+            console.log(roomService.rooms);
+            console.log(games);
+            console.log('Socket closed');
+          }
+
+          pubSubManager.publish(
+            ws,
+            `/play/${roomId}`,
+            JSON.stringify(game.getGameState(roomId))
+          );
         } else {
           const err = new Error('Invalid message');
           console.log(err);

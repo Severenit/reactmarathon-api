@@ -7,15 +7,16 @@
     }
   }
 */
-const { v4: uuidv4 } = require('uuid');
+import { v4 } from 'uuid';
 
-class RoomService {
+export class RoomService {
   constructor() {
     this.rooms = {};
   }
 
   addRoom(userId, username, roomname) {
-    const roomId = uuidv4();
+    const roomId = v4();
+		// const roomId = '228';
     this.rooms[roomId] = {
       userId: userId,
       username: username,
@@ -28,5 +29,3 @@ class RoomService {
     delete this.rooms[roomId];
   }
 }
-
-module.exports = RoomService;

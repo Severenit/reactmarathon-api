@@ -1,223 +1,252 @@
 {
-  "228": {
-    "roomId": "228",
-    "status": "wait",
-    "p1": {
-      "owner": "p1",
-      "userId": "Putin228",
-      "pokemons": [
-        {
-          "abilities": ["overgrow", "chlorophyll"],
-          "base_experience": 64,
-          "height": 7,
-          "weight": 69,
-          "id": 1,
-          "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
-          "name": "bulbasaur",
-          "stats": {
-            "hp": 45,
-            "attack": 49,
-            "defense": 49,
-            "special-attack": 65,
-            "special-defense": 65,
-            "speed": 45
-          },
-          "type": "grass",
-          "values": { "top": 1, "right": 3, "bottom": 2, "left": 4 },
-          "hits": [1, 3, 2, 4]
-        },
-        {
-          "abilities": ["blaze", "solar-power"],
-          "base_experience": 62,
-          "height": 6,
-          "weight": 85,
-          "id": 4,
-          "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png",
-          "name": "charmander",
-          "stats": {
-            "hp": 39,
-            "attack": 52,
-            "defense": 43,
-            "special-attack": 60,
-            "special-defense": 50,
-            "speed": 65
-          },
-          "type": "fire",
-          "values": { "top": 2, "right": 1, "bottom": 5, "left": 3 },
-          "hits": [2, 1, 5, 3]
-        },
-        {
-          "abilities": ["torrent", "rain-dish"],
-          "base_experience": 63,
-          "height": 5,
-          "weight": 90,
-          "id": 7,
-          "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png",
-          "name": "squirtle",
-          "stats": {
-            "hp": 44,
-            "attack": 48,
-            "defense": 65,
-            "special-attack": 50,
-            "special-defense": 64,
-            "speed": 43
-          },
-          "type": "water",
-          "values": { "top": 2, "right": 5, "bottom": 1, "left": 4 },
-          "hits": [2, 5, 1, 4]
-        },
-        {
-          "abilities": ["static", "lightning-rod"],
-          "base_experience": 112,
-          "height": 4,
-          "weight": 60,
-          "id": 25,
-          "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png",
-          "name": "pikachu",
-          "stats": {
-            "hp": 35,
-            "attack": 55,
-            "defense": 40,
-            "special-attack": 50,
-            "special-defense": 50,
-            "speed": 90
-          },
-          "type": "electric",
-          "values": { "top": 2, "right": 3, "bottom": 3, "left": 5 },
-          "hits": [2, 3, 3, 5]
-        },
-        {
-          "abilities": ["keen-eye", "tangled-feet", "big-pecks"],
-          "base_experience": 122,
-          "height": 11,
-          "weight": 300,
-          "id": 17,
-          "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/17.png",
-          "name": "pidgeotto",
-          "stats": {
-            "hp": 63,
-            "attack": 60,
-            "defense": 55,
-            "special-attack": 50,
-            "special-defense": 50,
-            "speed": 71
-          },
-          "type": "normal",
-          "values": { "top": 1, "right": 2, "bottom": 3, "left": 2 },
-          "hits": [1, 2, 3, 2]
-        }
-      ]
+  "position": 9,
+  "card": {
+    "player": 2,
+    "abilities": ["sturdy", "magnet-pull", "sand-force"],
+    "base_experience": 75,
+    "height": 10,
+    "weight": 970,
+    "id": 299,
+    "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/299.png",
+    "name": "nosepass",
+    "stats": {
+      "hp": 30,
+      "attack": 45,
+      "defense": 135,
+      "special-attack": 45,
+      "special-defense": 90,
+      "speed": 30
     },
-    "p2": { "owner": "", "pokemons": [], "userId": "" },
-    "board": [],
-    "move": {},
-    "hands": {
-      "p1": [
-        {
-          "abilities": ["overgrow", "chlorophyll"],
-          "base_experience": 64,
-          "height": 7,
-          "weight": 69,
-          "id": 1,
-          "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
-          "name": "bulbasaur",
-          "stats": {
-            "hp": 45,
-            "attack": 49,
-            "defense": 49,
-            "special-attack": 65,
-            "special-defense": 65,
-            "speed": 45
-          },
-          "type": "grass",
-          "values": { "top": 1, "right": 3, "bottom": 2, "left": 4 },
-          "hits": [1, 3, 2, 4]
+    "type": "rock",
+    "values": { "top": 6, "right": 3, "bottom": 2, "left": 2 },
+    "hits": [6, 3, 2, 2],
+    "possession": "red"
+  },
+  "data": [
+    {
+      "position": 1,
+      "card": {
+        "player": 2,
+        "abilities": ["vital-spirit", "anger-point", "defiant"],
+        "base_experience": 61,
+        "height": 5,
+        "weight": 280,
+        "id": 56,
+        "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/56.png",
+        "name": "mankey",
+        "stats": {
+          "hp": 40,
+          "attack": 80,
+          "defense": 35,
+          "special-attack": 35,
+          "special-defense": 45,
+          "speed": 70
         },
-        {
-          "abilities": ["blaze", "solar-power"],
-          "base_experience": 62,
-          "height": 6,
-          "weight": 85,
-          "id": 4,
-          "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png",
-          "name": "charmander",
-          "stats": {
-            "hp": 39,
-            "attack": 52,
-            "defense": 43,
-            "special-attack": 60,
-            "special-defense": 50,
-            "speed": 65
-          },
-          "type": "fire",
-          "values": { "top": 2, "right": 1, "bottom": 5, "left": 3 },
-          "hits": [2, 1, 5, 3]
-        },
-        {
-          "abilities": ["torrent", "rain-dish"],
-          "base_experience": 63,
-          "height": 5,
-          "weight": 90,
-          "id": 7,
-          "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png",
-          "name": "squirtle",
-          "stats": {
-            "hp": 44,
-            "attack": 48,
-            "defense": 65,
-            "special-attack": 50,
-            "special-defense": 64,
-            "speed": 43
-          },
-          "type": "water",
-          "values": { "top": 2, "right": 5, "bottom": 1, "left": 4 },
-          "hits": [2, 5, 1, 4]
-        },
-        {
-          "abilities": ["static", "lightning-rod"],
-          "base_experience": 112,
-          "height": 4,
-          "weight": 60,
-          "id": 25,
-          "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png",
-          "name": "pikachu",
-          "stats": {
-            "hp": 35,
-            "attack": 55,
-            "defense": 40,
-            "special-attack": 50,
-            "special-defense": 50,
-            "speed": 90
-          },
-          "type": "electric",
-          "values": { "top": 2, "right": 3, "bottom": 3, "left": 5 },
-          "hits": [2, 3, 3, 5]
-        },
-        {
-          "abilities": ["keen-eye", "tangled-feet", "big-pecks"],
-          "base_experience": 122,
-          "height": 11,
-          "weight": 300,
-          "id": 17,
-          "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/17.png",
-          "name": "pidgeotto",
-          "stats": {
-            "hp": 63,
-            "attack": 60,
-            "defense": 55,
-            "special-attack": 50,
-            "special-defense": 50,
-            "speed": 71
-          },
-          "type": "normal",
-          "values": { "top": 1, "right": 2, "bottom": 3, "left": 2 },
-          "hits": [1, 2, 3, 2]
-        }
-      ]
+        "type": "fighting",
+        "values": { "top": 2, "right": 2, "bottom": 2, "left": 1 },
+        "hits": [2, 2, 2, 1],
+        "possession": "red"
+      }
     },
-    "rate": 0,
-    "beaten": [],
-    "empty": [],
-    "turnOwner": ""
-  }
+    {
+      "position": 2,
+      "card": {
+        "player": 1,
+        "abilities": ["overgrow", "chlorophyll"],
+        "base_experience": 64,
+        "height": 7,
+        "hits": [1, 3, 2, 4],
+        "id": 1,
+        "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
+        "name": "bulbasaur",
+        "stats": {
+          "attack": 49,
+          "defense": 49,
+          "hp": 45,
+          "special-attack": 65,
+          "special-defense": 65,
+          "speed": 45
+        },
+        "type": "grass",
+        "values": { "bottom": 2, "left": 4, "right": 3, "top": 1 },
+        "weight": 69,
+        "possession": "blue"
+      }
+    },
+    {
+      "position": 3,
+      "card": {
+        "player": 2,
+        "abilities": ["magic-bounce"],
+        "base_experience": 198,
+        "height": 12,
+        "weight": 490,
+        "id": 10057,
+        "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10057.png",
+        "name": "absol-mega",
+        "stats": {
+          "hp": 65,
+          "attack": 150,
+          "defense": 60,
+          "special-attack": 115,
+          "special-defense": 60,
+          "speed": 115
+        },
+        "type": "dark",
+        "values": { "top": 4, "right": 1, "bottom": 2, "left": 1 },
+        "hits": [4, 1, 2, 1],
+        "possession": "red"
+      }
+    },
+    {
+      "position": 4,
+      "card": {
+        "player": 1,
+        "abilities": ["keen-eye", "tangled-feet", "big-pecks"],
+        "base_experience": 122,
+        "height": 11,
+        "hits": [1, 2, 3, 2],
+        "id": 17,
+        "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/17.png",
+        "name": "pidgeotto",
+        "stats": {
+          "attack": 60,
+          "defense": 55,
+          "hp": 63,
+          "special-attack": 50,
+          "special-defense": 50,
+          "speed": 71
+        },
+        "type": "normal",
+        "values": { "bottom": 3, "left": 2, "right": 2, "top": 1 },
+        "weight": 300,
+        "possession": "red"
+      }
+    },
+    {
+      "position": 5,
+      "card": {
+        "player": 1,
+        "abilities": ["blaze", "solar-power"],
+        "base_experience": 62,
+        "height": 6,
+        "hits": [2, 1, 5, 3],
+        "id": 4,
+        "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png",
+        "name": "charmander",
+        "stats": {
+          "attack": 52,
+          "defense": 43,
+          "hp": 39,
+          "special-attack": 60,
+          "special-defense": 50,
+          "speed": 65
+        },
+        "type": "fire",
+        "values": { "bottom": 5, "left": 3, "right": 1, "top": 2 },
+        "weight": 85,
+        "possession": "blue"
+      }
+    },
+    {
+      "position": 6,
+      "card": {
+        "player": 2,
+        "abilities": ["levitate"],
+        "base_experience": 154,
+        "height": 3,
+        "weight": 3,
+        "id": 479,
+        "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/479.png",
+        "name": "rotom",
+        "stats": {
+          "hp": 50,
+          "attack": 50,
+          "defense": 77,
+          "special-attack": 95,
+          "special-defense": 77,
+          "speed": 91
+        },
+        "type": "electric",
+        "values": { "top": 1, "right": 1, "bottom": 1, "left": 1 },
+        "hits": [1, 1, 1, 1],
+        "possession": "red"
+      }
+    },
+    {
+      "position": 7,
+      "card": {
+        "player": 1,
+        "abilities": ["static", "lightning-rod"],
+        "base_experience": 112,
+        "height": 4,
+        "hits": [2, 3, 3, 5],
+        "id": 25,
+        "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png",
+        "name": "pikachu",
+        "stats": {
+          "attack": 55,
+          "defense": 40,
+          "hp": 35,
+          "special-attack": 50,
+          "special-defense": 50,
+          "speed": 90
+        },
+        "type": "electric",
+        "values": { "bottom": 3, "left": 5, "right": 3, "top": 2 },
+        "weight": 60,
+        "possession": "blue"
+      }
+    },
+    {
+      "position": 8,
+      "card": {
+        "player": 1,
+        "abilities": ["torrent", "rain-dish"],
+        "base_experience": 63,
+        "height": 5,
+        "hits": [2, 5, 1, 4],
+        "id": 7,
+        "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png",
+        "name": "squirtle",
+        "stats": {
+          "attack": 48,
+          "defense": 65,
+          "hp": 44,
+          "special-attack": 50,
+          "special-defense": 64,
+          "speed": 43
+        },
+        "type": "water",
+        "values": { "bottom": 1, "left": 4, "right": 5, "top": 2 },
+        "weight": 90,
+        "possession": "blue"
+      }
+    },
+    {
+      "position": 9,
+      "card": {
+        "player": 2,
+        "abilities": ["sturdy", "magnet-pull", "sand-force"],
+        "base_experience": 75,
+        "height": 10,
+        "weight": 970,
+        "id": 299,
+        "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/299.png",
+        "name": "nosepass",
+        "stats": {
+          "hp": 30,
+          "attack": 45,
+          "defense": 135,
+          "special-attack": 45,
+          "special-defense": 90,
+          "speed": 30
+        },
+        "type": "rock",
+        "values": { "top": 6, "right": 3, "bottom": 2, "left": 2 },
+        "hits": [6, 3, 2, 2],
+        "possession": "red"
+      }
+    }
+  ]
 }
