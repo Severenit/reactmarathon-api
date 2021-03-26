@@ -15,8 +15,8 @@ export class RoomService {
   }
 
   addRoom(userId, username, roomname) {
-    // const roomId = v4();
-		const roomId = '228';
+    const roomId = v4();
+		// const roomId = '228';
     this.rooms[roomId] = {
       userId: userId,
       username: username,

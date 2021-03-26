@@ -1,126 +1,146 @@
-import Joi from 'joi';
+// import Validator from 'fastest-validator';
+const Validator = require('fastest-validator');
 
-const everyMessageSchema = Joi.object({
-  type: Joi.string().required(),
-  data: Joi.object().required(),
-});
+const v = new Validator();
 
-const createRoomSchema = Joi.object({
-  userId: Joi.string().required(),
-  username: Joi.string().required(),
-  roomId: Joi.string(),
-  roomname: Joi.string(),
-  pokemons: Joi.array().items(
-    Joi.object({
-      abilities: Joi.array().items(Joi.string()),
-      base_experience: Joi.number(),
-      height: Joi.number(),
-      weight: Joi.number(),
-      id: Joi.number().required(),
-      img: Joi.string(),
-      name: Joi.string().required(),
-      stats: Joi.object({
-        hp: Joi.number(),
-        attack: Joi.number(),
-        defense: Joi.number(),
-        'special-attack': Joi.number(),
-        'special-defense': Joi.number(),
-        speed: Joi.number(),
-      }),
-      type: Joi.string(),
-      values: Joi.object({
-        top: Joi.number(),
-        right: Joi.number(),
-        bottom: Joi.number(),
-        left: Joi.number(),
-      }).required(),
-      hits: Joi.array().items(Joi.number()).required(),
-    }).required()
-  ),
-});
-
-const joinRoomSchema = Joi.object({
-  userId: Joi.string().required(),
-  username: Joi.string().required(),
-  roomId: Joi.string().required(),
-  roomname: Joi.string(),
-  pokemons: Joi.array().items(
-    Joi.object({
-      abilities: Joi.array().items(Joi.string()),
-      base_experience: Joi.number(),
-      height: Joi.number(),
-      weight: Joi.number(),
-      id: Joi.number().required(),
-      img: Joi.string(),
-      name: Joi.string().required(),
-      stats: Joi.object({
-        hp: Joi.number(),
-        attack: Joi.number(),
-        defense: Joi.number(),
-        'special-attack': Joi.number(),
-        'special-defense': Joi.number(),
-        speed: Joi.number(),
-      }),
-      type: Joi.string(),
-      values: Joi.object({
-        top: Joi.number(),
-        right: Joi.number(),
-        bottom: Joi.number(),
-        left: Joi.number(),
-      }).required(),
-      hits: Joi.array().items(Joi.number()).required(),
-    }).required()
-  ),
-});
-
-const playerTurnSchema = Joi.object({
-  roomId: Joi.string().required(),
-  playerNames: Joi.string().required(),
-  move: Joi.object().required(),
-  p1: Joi.object().required(),
-  p2: Joi.object().required(),
-});
-
-const everyMessageValidation = (payload) => {
-  try {
-    everyMessageSchema.validate(payload);
-    console.log('Validation success!');
-    return true;
-  } catch (error) {
-    console.log(error);
-  }
+const everyMessageSchema = {
+  type: { type: 'string' },
+  data: { type: 'object', strict: false },
 };
 
-const createRoomValidation = (data) => {
-  try {
-    createRoomSchema.validate(data);
-    console.log('Validation success!');
-    return true;
-  } catch (error) {
-    console.log(error);
-  }
+const createRoomSchema = {
+  userId: { type: 'string' },
+  username: { type: 'string' },
+  roomId: { type: 'uuid', strict: false },
+  roomname: { type: 'string', strict: false },
+  pokemons: {
+    type: 'array',
+    items: {
+      type: 'object',
+      props: {
+        abilities: { type: 'array', items: 'string' },
+        base_experience: { type: 'number' },
+        height: { type: 'number' },
+        weight: { type: 'number' },
+        id: { type: 'number' },
+        img: { type: 'string' },
+        name: { type: 'string' },
+        stats: {
+          type: 'object',
+          props: {
+            hp: { type: 'number' },
+            attack: { type: 'number' },
+            defense: { type: 'number' },
+            'special-attack': { type: 'number' },
+            'special-defense': { type: 'number' },
+            speed: { type: 'number' },
+          },
+        },
+        type: { type: 'string' },
+        values: {
+          type: 'object',
+          props: {
+            top: { type: 'number' },
+            right: { type: 'number' },
+            bottom: { type: 'number' },
+            left: { type: 'number' },
+          },
+        },
+        hits: { type: 'array', items: 'number' },
+      },
+    },
+  },
 };
 
-const joinRoomValidation = (data) => {
-  try {
-    joinRoomSchema.validate(data);
-    console.log('Validation success!');
-    return true;
-  } catch (error) {
-    console.log(error);
-  }
+const joinRoomSchema = {
+  userId: { type: 'string' },
+  username: { type: 'string' },
+  roomId: { type: 'uuid' },
+  roomname: { type: 'string' },
+  pokemons: {
+    type: 'array',
+    items: {
+      type: 'object',
+      props: {
+        abilities: { type: 'array', items: 'string' },
+        base_experience: { type: 'number' },
+        height: { type: 'number' },
+        weight: { type: 'number' },
+        id: { type: 'number' },
+        img: { type: 'string' },
+        name: { type: 'string' },
+        stats: {
+          type: 'object',
+          props: {
+            hp: { type: 'number' },
+            attack: { type: 'number' },
+            defense: { type: 'number' },
+            'special-attack': { type: 'number' },
+            'special-defense': { type: 'number' },
+            speed: { type: 'number' },
+          },
+        },
+        type: { type: 'string' },
+        values: {
+          type: 'object',
+          props: {
+            top: { type: 'number' },
+            right: { type: 'number' },
+            bottom: { type: 'number' },
+            left: { type: 'number' },
+          },
+        },
+        hits: { type: 'array', items: 'number' },
+      },
+    },
+  },
 };
 
-const playerTurnValidation = (data) => {
-  try {
-    playerTurnSchema.validate(data);
-    console.log('Validation success!');
-    return true;
-  } catch (error) {
-    console.log(error);
-  }
+const playerTurnSchema = {
+  roomId: { type: 'uuid' },
+  position: { type: 'number' },
+  card: {
+    type: 'object',
+    props: {
+      player: { type: 'number' },
+      abilities: { type: 'array', items: 'string' },
+      base_experience: { type: 'number' },
+      height: { type: 'number' },
+      weight: { type: 'number' },
+      id: { type: 'number' },
+      img: { type: 'string' },
+      name: { type: 'string' },
+      stats: {
+        type: 'object',
+        props: {
+          hp: { type: 'number' },
+          attack: { type: 'number' },
+          defense: { type: 'number' },
+          'special-attack': { type: 'number' },
+          'special-defense': { type: 'number' },
+          speed: { type: 'number' },
+        },
+      },
+      type: { type: 'string' },
+      values: {
+        type: 'object',
+        props: {
+          top: { type: 'number' },
+          right: { type: 'number' },
+          bottom: { type: 'number' },
+          left: { type: 'number' },
+        },
+      },
+      hits: { type: 'array', items: 'number' },
+      possession: { type: 'string' },
+    },
+  },
 };
 
+const everyMessageValidation = v.compile(everyMessageSchema);
+const createRoomValidation = v.compile(createRoomSchema);
+const joinRoomValidation = v.compile(joinRoomSchema);
+const playerTurnValidation = v.compile(playerTurnSchema);
 export {
   everyMessageValidation,
   createRoomValidation,

@@ -59,8 +59,8 @@ export default (app) => {
             JSON.stringify(roomService.rooms)
           );
           pubSubManager.unsubscribe(ws, '/rooms');
-					
-					pubSubManager.createChannel(`/play/${roomId}`);
+
+          pubSubManager.createChannel(`/play/${roomId}`);
           pubSubManager.subscribe(ws, `/play/${roomId}`);
           pubSubManager.publish(ws, `/play/${roomId}`, JSON.stringify(game));
         } else if (
@@ -88,12 +88,12 @@ export default (app) => {
 
           pubSubManager.publish(ws, `/play/${roomId}`, JSON.stringify(game));
         } else {
-          const err = new Error('Invalid request type');
+          const err = new Error('Invalid message');
           console.log(err);
           ws.send(JSON.stringify(err));
         }
       } else {
-        const err = new Error('Invalid request type');
+        const err = new Error('Invalid message type');
         console.log(err);
         ws.send(JSON.stringify(err));
       }
@@ -111,7 +111,6 @@ export default (app) => {
       console.log(games);
       console.log('Socket closed');
     });
-
   });
 
   // app.on('upgrade', (req, socket, head) => {
