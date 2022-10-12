@@ -1,0 +1,74 @@
+{
+  "-Mo_JpNDoNQR-ISBPhFP": {
+    "abilities": [
+      "overgrow",
+      "chlorophyll"
+    ],
+    "attacks": [
+      15,
+      [
+        2,
+        3,
+        5,
+        5
+      ]
+    ],
+    "base_experience": 64,
+    "height": 7,
+    "id": 1,
+    "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
+    "name": "bulbasaur",
+    "stats": {
+      "attack": 49,
+      "defense": 49,
+      "hp": 45,
+      "special-attack": 65,
+      "special-defense": 65,
+      "speed": 45
+    },
+    "type": "grass",
+    "values": {
+      "bottom": 5,
+      "left": 5,
+      "right": 3,
+      "top": 2
+    },
+    "weight": 69
+  },
+  "-Mo_JpNUMiA5qQPDJTHh": {
+    "abilities": [
+      "blaze",
+      "solar-power"
+    ],
+    "attacks": [
+      16,
+      [
+        3,
+        3,
+        5,
+        5
+      ]
+    ],
+    "base_experience": 62,
+    "height": 6,
+    "id": 4,
+    "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png",
+    "name": "charmander",
+    "stats": {
+      "attack": 52,
+      "defense": 43,
+      "hp": 39,
+      "special-attack": 60,
+      "special-defense": 50,
+      "speed": 65
+    },
+    "type": "fire",
+    "values": {
+      "bottom": 5,
+      "left": 5,
+      "right": 3,
+      "top": 3
+    },
+    "weight": 85
+  }
+}

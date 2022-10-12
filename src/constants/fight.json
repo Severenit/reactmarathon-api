@@ -1,0 +1,186 @@
+[
+  {
+    "abilities": [
+      "water-bubble",
+      "water-absorb"
+    ],
+    "base_experience": 54,
+    "height": 3,
+    "weight": 40,
+    "id": 751,
+    "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/751.png",
+    "name": "dewpider",
+    "stats": {
+      "hp": 38,
+      "attack": 40,
+      "defense": 52,
+      "special-attack": 40,
+      "special-defense": 72,
+      "speed": 27
+    },
+    "type": "water",
+    "values": {
+      "top": 4,
+      "right": 6,
+      "bottom": 1,
+      "left": 1
+    },
+    "attacks": [
+      13,
+      [
+        4,
+        5,
+        2,
+        2
+      ]
+    ]
+  },
+  {
+    "abilities": [
+      "intimidate",
+      "shed-skin",
+      "unnerve"
+    ],
+    "base_experience": 157,
+    "height": 35,
+    "weight": 650,
+    "id": 24,
+    "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/24.png",
+    "name": "arbok",
+    "stats": {
+      "hp": 60,
+      "attack": 95,
+      "defense": 69,
+      "special-attack": 65,
+      "special-defense": 79,
+      "speed": 80
+    },
+    "type": "poison",
+    "values": {
+      "top": 6,
+      "right": "A",
+      "bottom": 2,
+      "left": 8
+    },
+    "attacks": [
+      21,
+      [
+        6,
+        6,
+        4,
+        5
+      ]
+    ]
+  },
+  {
+    "abilities": [
+      "keen-eye",
+      "stall",
+      "prankster"
+    ],
+    "base_experience": 133,
+    "height": 5,
+    "weight": 110,
+    "id": 302,
+    "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/302.png",
+    "name": "sableye",
+    "stats": {
+      "hp": 50,
+      "attack": 75,
+      "defense": 75,
+      "special-attack": 65,
+      "special-defense": 65,
+      "speed": 50
+    },
+    "type": "dark",
+    "values": {
+      "top": 3,
+      "right": 4,
+      "bottom": 6,
+      "left": 8
+    },
+    "attacks": [
+      17,
+      [
+        7,
+        2,
+        4,
+        4
+      ]
+    ]
+  },
+  {
+    "abilities": [
+      "effect-spore",
+      "dry-skin",
+      "damp"
+    ],
+    "base_experience": 57,
+    "height": 3,
+    "weight": 54,
+    "id": 46,
+    "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/46.png",
+    "name": "paras",
+    "stats": {
+      "hp": 35,
+      "attack": 70,
+      "defense": 55,
+      "special-attack": 45,
+      "special-defense": 55,
+      "speed": 25
+    },
+    "type": "bug",
+    "values": {
+      "top": 5,
+      "right": 6,
+      "bottom": 2,
+      "left": 4
+    },
+    "attacks": [
+      14,
+      [
+        2,
+        6,
+        3,
+        3
+      ]
+    ]
+  },
+  {
+    "abilities": [
+      "big-pecks",
+      "super-luck",
+      "rivalry"
+    ],
+    "base_experience": 220,
+    "height": 12,
+    "weight": 290,
+    "id": 521,
+    "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/521.png",
+    "name": "unfezant",
+    "stats": {
+      "hp": 80,
+      "attack": 115,
+      "defense": 80,
+      "special-attack": 65,
+      "special-defense": 55,
+      "speed": 93
+    },
+    "type": "normal",
+    "values": {
+      "top": 5,
+      "right": 6,
+      "bottom": 4,
+      "left": 1
+    },
+    "attacks": [
+      19,
+      [
+        6,
+        3,
+        4,
+        6
+      ]
+    ]
+  }
+]
